@@ -10,6 +10,12 @@
     text {
         background-color: white;
     }
+      .foreign-content {
+        color: white;
+        background-color: darkgreen;
+        font-size: 10px;
+        padding: 3px 3px;
+      }
   </style>
 </head>
 <body>
@@ -23,6 +29,14 @@
     width="938" 
     height="645"
     preserveAspectRatio="none" />
+
+      <foreignObject x="330" y="165" width="80" height="50">
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          <span id="mySpan" class="foreign-content">
+            6-2-8:3
+          </span>
+        </div>
+      </foreignObject>
 
   <!--
   <text x="100" y="100" font-size="32" fill="white" font-family="Arial">Hello SVG!</text>
