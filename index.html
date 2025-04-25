@@ -1,44 +1,46 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>SVG Background Image</title>
-  <style>
-    body {
-      margin: 50px;
-    }
-    text {
-        background-color: white;
-    }
-      .foreign-content {
-        color: white;
-        background-color: darkgreen;
-        font-size: 10px;
-        padding: 3px 3px;
-      }
-  </style>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>SVG Background Image</title>
 
-<svg width="938" height="645" xmlns="http://www.w3.org/2000/svg">
-  <image 
-    href="map001.png" 
-    x="0" y="0" 
-    width="938" 
-    height="645"
-    preserveAspectRatio="none" />
+        <style>
+            body {
+                margin: 50px;
+            }
+            text {
+                background-color: white;
+            }
+            .foreign-content {
+                color: white;
+                background-color: darkgreen;
+                font-size: 10px;
+                padding: 3px 3px;
+            }
+        </style>
+    </head>
 
-      <foreignObject x="330" y="165" width="80" height="50">
-        <div xmlns="http://www.w3.org/1999/xhtml">
-          <span id="mySpan" class="foreign-content">
-            6-2-8:3
-          </span>
-        </div>
-      </foreignObject>
+    <body>
+        <svg width="938" height="645" xmlns="http://www.w3.org/2000/svg">
+            <image
+                href="map001.png"
+                x="0" y="0"
+                width="938" height="645"
+                preserveAspectRatio="none" />
 
-  <!-- Rectangle, to anchor coordinate system -->
-  <rect x="57" y="65" width="843" height="548" fill="rgba(0, 0, 255, 0)" stroke="black" stroke-width="1"/>
-</svg>
+            <foreignObject x="330" y="165" width="80" height="50">
+                <div xmlns="http://www.w3.org/1999/xhtml">
+                    <span id="mySpan" class="foreign-content">
+                        6-2-8:3
+                    </span>
+                </div>
+            </foreignObject>
 
-</body>
+            <!-- Rectangle, to anchor coordinate system -->
+            <rect
+                x="57" y="65" width="843" height="548"
+                fill="rgba(0, 0, 255, 0)" stroke="black" stroke-width="1" />
+        </svg>
+    </body>
 </html>
