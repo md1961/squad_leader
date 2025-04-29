@@ -20,11 +20,25 @@
             }
         </style>
 
+        <script src="js/svg_element.js"></script>
         <script src="js/init.js" /></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const svg = document.getElementById("map");
+
+                const x = xCoord("I1");
+                const elemLine = new SvgElement('line', {x1: x, y1: 0, x2: x, y2: 645, stroke: "black"});
+
+                svg.appendChild(elemLine.toDOM());
+
+                console.log(elemLine.toString());
+            });
+        </script>
     </head>
 
     <body>
-        <svg width="938" height="645" xmlns="http://www.w3.org/2000/svg">
+        <svg id="map" width="938" height="645" xmlns="http://www.w3.org/2000/svg">
             <image
                 href="map001.png"
                 x="0" y="0"
