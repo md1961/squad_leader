@@ -27,8 +27,9 @@
             document.addEventListener("DOMContentLoaded", function () {
                 const svg = document.getElementById("map");
 
-                const x = xCoord("I1");
-                const elemLine = new SvgElement('line', {x1: x, y1: 0, x2: x, y2: 645, stroke: "black"});
+                const [x1, y1] = coord("H4");
+                const [x2, y2] = coord("K3");
+                const elemLine = new SvgElement('line', {x1, y1, x2, y2, stroke: "black"});
 
                 svg.appendChild(elemLine.toDOM());
 
