@@ -35,3 +35,21 @@ function xCoord(hexName) {
 function isLower(hexName) {
     return columnIndexOf(hexName) % 2 === (isLowerOnLeftmostColumn ? 0 : 1);
 }
+
+const numRows = rowNumberOf(hexNameBottomRight) - 1;
+const rowHeight = offsetToBottomRight[1]
+                  / (
+                      numRows
+                      + ( isLower(hexNameTopLeft) && !isLower(hexNameBottomRight) ? -0.5 : 0)
+                      + (!isLower(hexNameTopLeft) &&  isLower(hexNameBottomRight) ?  0.5 : 0)
+                  );
+const yCoordsLowerRow = Array.from({length: numRows},
+                        (_, i) => coordTopLeft[1] + rowHeight * i + (isLowerOnLeftmostColumn ? 0 : rowHeight / 2));
+
+function yCoord(hexName) {
+    return yCoordsLowerRow[rowNumberOf(hexName) - 1] - (isLower(hexName) ? 0 : rowHeight / 2);
+}
+
+function coord(hexName) {
+    return [xCoord(hexName), yCoord(hexName)];
+}
