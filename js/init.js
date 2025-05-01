@@ -43,7 +43,7 @@ const rowHeight = offsetToBottomRight[1]
                       + ( isLower(hexNameTopLeft) && !isLower(hexNameBottomRight) ? -0.5 : 0)
                       + (!isLower(hexNameTopLeft) &&  isLower(hexNameBottomRight) ?  0.5 : 0)
                   );
-const yCoordsLowerRow = Array.from({length: numRows},
+const yCoordsLowerRow = Array.from({length: numRows + 1},
                         (_, i) => coordTopLeft[1] + rowHeight * i + (isLowerOnLeftmostColumn ? 0 : rowHeight / 2));
 
 function yCoord(hexName) {
