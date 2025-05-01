@@ -29,7 +29,7 @@
             document.addEventListener("DOMContentLoaded", function () {
                 const svg = document.getElementById("map");
 
-                svg.addEventListener('click', (event) => {
+                svg.addEventListener('mousedown', (event) => {
                     // クリック位置をSVGの座標系に変換
                     const pt = svg.createSVGPoint();
                     pt.x = event.clientX;
@@ -40,10 +40,21 @@
 
                     console.log(`SVG座標: x=${x}, y=${y}`);
 
-                    const elemCircle = new SvgElement('circle', {cx: x, cy: y, r: 2, fill: 'red'});
-                    svg.appendChild(elemCircle.toDOM());
+                    const hexName = findHexFromCoord(x, y);
+                    if (hexName) {
+                        const [cx, cy] = coord(hexName);
+                        const elemHex = new SvgHex(cx, cy, rowHeight - 5);
+                        svg.appendChild(elemHex.toDOM());
+                    }
+
+                    // const elemCircle = new SvgElement('circle', {cx: x, cy: y, r: 2, fill: 'red'});
+                    // svg.appendChild(elemCircle.toDOM());
 
                     console.log(`hexName = ${findHexFromCoord(x, y)}`);
+                });
+
+                svg.addEventListener('mouseup', (event) => {
+                    svg.removeChild(svg.lastChild);
                 });
 
                 /*
