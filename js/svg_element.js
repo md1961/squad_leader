@@ -40,3 +40,24 @@ class SvgElement {
         return el;
     }
 }
+
+class SvgHex {
+    constructor(cx, cy, height) {
+        const r = height / Math.sqrt(3);
+        const h = height / 2;
+        const points = [
+            [cx + r  , cy    ],
+            [cx + r/2, cy + h],
+            [cx - r/2, cy + h],
+            [cx - r  , cy    ],
+            [cx - r/2, cy - h],
+            [cx + r/2, cy - h]
+        ];
+        const attrPoints = points.map(p => p.join(",")).join(" ");
+        this.svgPolygon = new SvgElement('polygon', {points: attrPoints, stroke: 'red', fill: 'none'});
+    }
+
+    toDOM() {
+        return this.svgPolygon.toDOM();
+    }
+}
