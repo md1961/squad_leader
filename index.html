@@ -23,17 +23,36 @@
         <script src="js/svg_element.js"></script>
         <script src="js/init.js" /></script>
 
+        <script src="js/find_hex_from_coord.js" /></script>
+
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const svg = document.getElementById("map");
 
+                svg.addEventListener('click', (event) => {
+                    // クリック位置をSVGの座標系に変換
+                    const pt = svg.createSVGPoint();
+                    pt.x = event.clientX;
+                    pt.y = event.clientY;
+
+                    const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+                    const {x, y} = svgP;
+
+                    console.log(`SVG座標: x=${x}, y=${y}`);
+
+                    const elemCircle = new SvgElement('circle', {cx: x, cy: y, r: 2, fill: 'red'});
+                    svg.appendChild(elemCircle.toDOM());
+
+                    console.log(`hexName = ${findHexFromCoord(x, y)}`);
+                });
+
+                /*
                 const [x1, y1] = coord("H4");
                 const [x2, y2] = coord("K3");
                 const elemLine = new SvgElement('line', {x1, y1, x2, y2, stroke: "black"});
 
                 svg.appendChild(elemLine.toDOM());
-
-                console.log(elemLine.toString());
+                */
             });
         </script>
     </head>
