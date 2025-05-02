@@ -41,8 +41,16 @@ class SvgElement {
     }
 }
 
+// 上下の辺が水平な正六角形
 class SvgHex {
-    constructor(cx, cy, height) {
+    // height はヘクスの高さ(全高)
+    constructor(cx, cy, height, options = {}) {
+        const defaultOptions = {stroke: 'black', fill: 'none'};
+
+        let opts = {...options};  // copy options
+        if ('points' in opts) delete opts.points;
+        opts = {...defaultOptions, ...opts};
+
         const r = height / Math.sqrt(3);
         const h = height / 2;
         const points = [
@@ -53,8 +61,11 @@ class SvgHex {
             [cx - r/2, cy - h],
             [cx + r/2, cy - h]
         ];
+
         const attrPoints = points.map(p => p.join(",")).join(" ");
-        this.svgPolygon = new SvgElement('polygon', {points: attrPoints, stroke: 'red', fill: 'none'});
+        const attributes = {...{points: attrPoints}, ...opts};
+
+        this.svgPolygon = new SvgElement('polygon', attributes);
     }
 
     toDOM() {
