@@ -40,27 +40,53 @@
             document.addEventListener("DOMContentLoaded", function () {
                 const svg = document.getElementById("map");
 
+                let hexName0, hexName1;
+                let svgHex0;
+                let isDragging = false;
 
                 svg.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    hexName1 = null;
 
-                    console.log(`SVG座標: x=${x}, y=${y}`);
                     const [x, y] = transformToSVG(e, svg);
 
-                    const hexName = findHexFromCoord(x, y);
-                    if (hexName) {
-                        const [cx, cy] = coord(hexName);
-                        const elemHex = new SvgHex(cx, cy, rowHeight - 5);
-                        svg.appendChild(elemHex.toDOM());
+                    hexName0 = findHexFromCoord(x, y);
+                    if (hexName0) {
+                        const [cx, cy] = coord(hexName0);
+                        const elemHex = new SvgHex(cx, cy, rowHeight, {stroke: 'cyan', 'stroke-width': 3});
+                        svgHex0 = elemHex.toDOM();
+                        svg.appendChild(svgHex0);
                     }
 
-                    // const elemCircle = new SvgElement('circle', {cx: x, cy: y, r: 2, fill: 'red'});
-                    // svg.appendChild(elemCircle.toDOM());
-
-                    console.log(`hexName = ${findHexFromCoord(x, y)}`);
+                    //console.log(`hexName0 = ${findHexFromCoord(x, y)}`);
                 });
 
-                svg.addEventListener('mouseup', (event) => {
-                    svg.removeChild(svg.lastChild);
+                svg.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+
+                    const [x, y] = transformToSVG(e, svg);
+                    hexName1 = findHexFromCoord(x, y);
+
+                    if (hexName1 && hexName1 != hexName0) {
+                        let lastChild;
+                        while ((lastChild = svg.lastChild) !== svgHex0) {
+                            svg.removeChild(lastChild);
+                        }
+
+                        const [cx, cy] = coord(hexName1);
+                        const elemHex = new SvgHex(cx, cy, rowHeight, {stroke: 'red', 'stroke-width': 3});
+                        svg.appendChild(elemHex.toDOM());
+                    }
+                });
+
+                svg.addEventListener('mouseup', (e) => {
+                    isDragging = false;
+
+                    let lastChild;
+                    while ((lastChild = svg.lastChild) !== svgHex0) {
+                        svg.removeChild(lastChild);
+                    }
+                    svg.removeChild(lastChild);
                 });
 
                 /*
