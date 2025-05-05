@@ -87,15 +87,14 @@
                         svg.removeChild(lastChild);
                     }
                     svg.removeChild(lastChild);
+
+                    if (!hexName1) return;
+
+                    const [x1, y1] = coord(hexName0);
+                    const [x2, y2] = coord(hexName1);
+                    const elemLine = new SvgElement('line', {x1, y1, x2, y2, stroke: 'red'});
+                    svg.appendChild(elemLine.toDOM());
                 });
-
-                /*
-                const [x1, y1] = coord("H4");
-                const [x2, y2] = coord("K3");
-                const elemLine = new SvgElement('line', {x1, y1, x2, y2, stroke: "black"});
-
-                svg.appendChild(elemLine.toDOM());
-                */
             });
         </script>
     </head>
