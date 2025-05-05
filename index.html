@@ -88,12 +88,19 @@
                     }
                     svg.removeChild(lastChild);
 
-                    if (!hexName1) return;
+                    if (hexName1) {
+                        const [x1, y1] = coord(hexName0);
+                        const [x2, y2] = coord(hexName1);
+                        const elemLine = new SvgElement('line', {x1, y1, x2, y2, stroke: 'red', class: 'linfOfFire'});
+                        svg.appendChild(elemLine.toDOM());
 
-                    const [x1, y1] = coord(hexName0);
-                    const [x2, y2] = coord(hexName1);
-                    const elemLine = new SvgElement('line', {x1, y1, x2, y2, stroke: 'red'});
-                    svg.appendChild(elemLine.toDOM());
+                        hexName1 = null;
+                    } else {
+                        const elemLinfOfFire = document.querySelector('.linfOfFire');
+                        if (elemLinfOfFire) {
+                            elemLinfOfFire.remove();
+                        }
+                    }
                 });
             });
         </script>
