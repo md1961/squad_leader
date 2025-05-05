@@ -20,23 +20,14 @@
             }
         </style>
 
-        <script src="js/svg_element.js"></script>
         <script src="js/init.js" /></script>
+
+        <script src="js/svg_element.js"></script>
+        <script src="js/svg_util.js"></script>
 
         <script src="js/find_hex_from_coord.js" /></script>
 
         <script>
-            // クリック位置をSVGの座標系に変換
-            function transformViewPortCoordToSVG(x, y, svg) {
-                const pt = svg.createSVGPoint();
-                pt.x = x;
-                pt.y = y;
-
-                const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
-
-                return [svgP.x, svgP.y];
-            }
-
             document.addEventListener("DOMContentLoaded", function () {
                 const svg = document.getElementById("map");
 
