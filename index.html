@@ -27,7 +27,7 @@
 
         <script>
             // クリック位置をSVGの座標系に変換
-            function transformToSVG(event, svg) {
+            function transformViewPortCoordToSVG(event, svg) {
                 const pt = svg.createSVGPoint();
                 pt.x = event.clientX;
                 pt.y = event.clientY;
@@ -48,7 +48,7 @@
                     isDragging = true;
                     hexName1 = null;
 
-                    const [x, y] = transformToSVG(e, svg);
+                    const [x, y] = transformViewPortCoordToSVG(e, svg);
 
                     hexName0 = findHexFromCoord(x, y);
                     if (hexName0) {
@@ -64,7 +64,7 @@
                 svg.addEventListener('mousemove', (e) => {
                     if (!isDragging) return;
 
-                    const [x, y] = transformToSVG(e, svg);
+                    const [x, y] = transformViewPortCoordToSVG(e, svg);
                     hexName1 = findHexFromCoord(x, y);
 
                     if (hexName1 && hexName1 != hexName0) {
