@@ -66,7 +66,7 @@ class Unit {
     }
 
     toDOM() {
-        const span = new HtmlElement('span', {'class': 'foreign-content'}, this.content);
+        const span = new HtmlElement('span', {'class': 'unit'}, this.content);
         const el = new ForeignObject(span, this.x, this.y);
         return el.toDOM();
     }

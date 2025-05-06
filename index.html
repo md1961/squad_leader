@@ -12,11 +12,12 @@
             text {
                 background-color: white;
             }
-            .foreign-content {
+            .unit {
                 color: white;
                 background-color: darkgreen;
                 font-size: 10px;
                 padding: 3px 3px;
+                cursor: pointer;
             }
         </style>
 
@@ -30,7 +31,21 @@
         <script src="js/mousemove_modes.js" /></script>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
+                const svg = document.getElementById("map");
+
+                const unit = new Unit('6-2-8:3', 450, 230);
+                const elemUnit = unit.toDOM();
+                svg.appendChild(elemUnit);
+
+                document.querySelectorAll('.unit').forEach(unit => {
+                    unit.addEventListener('click', (e) => {
+                        console.log('CLICKED!');
+                    });
+                });
+            });
+
+            document.addEventListener("DOMContentLoaded", function() {
                 const svg = document.getElementById("map");
 
                 const mode = new ModeLineOfFire(svg);
@@ -65,14 +80,6 @@
                 x="0" y="0"
                 width="938" height="645"
                 preserveAspectRatio="none" />
-
-            <foreignObject x="330" y="165" width="80" height="50">
-                <div xmlns="http://www.w3.org/1999/xhtml">
-                    <span id="mySpan" class="foreign-content">
-                        6-2-8:3
-                    </span>
-                </div>
-            </foreignObject>
 
             <!-- Rectangle, to anchor coordinate system -->
             <rect
