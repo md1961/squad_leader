@@ -5,16 +5,6 @@ class SvgElement {
         this.children = children;
     }
 
-    setAttr(name, value) {
-        this.attrs[name] = value;
-        return this;
-    }
-
-    append(child) {
-        this.children.push(child);
-        return this;
-    }
-
     toString() {
         const attrsString = Object.entries(this.attrs)
             .map(([k, v]) => `${k}="${v}"`)
