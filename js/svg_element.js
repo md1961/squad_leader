@@ -1,8 +1,8 @@
 class BaseElement {
-    constructor(tag, attrs, children, namespace = null) {
+    constructor(tag, attrs = {}, children = [], namespace = null) {
         this.tag = tag;
         this.attrs = attrs;
-        this.children = children;
+        this.children = [].concat(children);
         this.namespace = namespace;
     }
 
@@ -11,7 +11,7 @@ class BaseElement {
             .map(([k, v]) => `${k}="${v}"`)
             .join(" ");
         const childrenString = this.children.map(child =>
-            child instanceof this.constructor ? child.toString() : child
+            child instanceof BaseElement ? child.toString() : child
         ).join("");
         return `<${this.tag}${attrsString ? " " + attrsString : ""}>${childrenString}</${this.tag}>`;
     }
@@ -20,13 +20,12 @@ class BaseElement {
         const el = this.namespace ? document.createElementNS(this.namespace, this.tag)
                                   : document.createElement(this.tag);
         for (const [k, v] of Object.entries(this.attrs)) {
-            el.setAttribute(k, v);
+            el.setAttribute(k, v.toString());
         }
         for (const child of this.children) {
             el.appendChild(
-                child instanceof this.constructor
-                ? child.toDOM()
-                : document.createTextNode(child)
+                child instanceof BaseElement ? child.toDOM()
+                                                  : document.createTextNode(child)
             );
         }
         return el;
@@ -36,6 +35,40 @@ class BaseElement {
 class SvgElement extends BaseElement {
     constructor(tag, attrs = {}, children = []) {
         super(tag, attrs, children, "http://www.w3.org/2000/svg");
+    }
+}
+
+class HtmlElement extends BaseElement {
+    constructor(tag, attrs = {}, children = []) {
+        super(tag, attrs, children, "http://www.w3.org/1999/xhtml");
+    }
+}
+
+class ForeignObject {
+    constructor(content, x, y) {
+        this.content = content;
+        this.x = x;
+        this.y = y;
+    }
+
+    toDOM() {
+        const div = new HtmlElement('div', {xmlns: "http://www.w3.org/1999/xhtml"}, this.content);
+        const el = new SvgElement('foreignObject', {x: this.x, y: this.y, width: 200, height: 100}, div);
+        return el.toDOM();
+    }
+}
+
+class Unit {
+    constructor(content, x, y) {
+        this.content = content;
+        this.x = x;
+        this.y = y;
+    }
+
+    toDOM() {
+        const span = new HtmlElement('span', {'class': 'foreign-content'}, this.content);
+        const el = new ForeignObject(span, this.x, this.y);
+        return el.toDOM();
     }
 }
 
