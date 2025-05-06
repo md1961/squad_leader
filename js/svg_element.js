@@ -1,8 +1,9 @@
-class SvgElement {
-    constructor(tag, attrs = {}, children = []) {
+class BaseElement {
+    constructor(tag, attrs, children, namespace = null) {
         this.tag = tag;
         this.attrs = attrs;
         this.children = children;
+        this.namespace = namespace;
     }
 
     toString() {
@@ -16,7 +17,8 @@ class SvgElement {
     }
 
     toDOM() {
-        const el = document.createElementNS("http://www.w3.org/2000/svg", this.tag);
+        const el = this.namespace ? document.createElementNS(this.namespace, this.tag)
+                                  : document.createElement(this.tag);
         for (const [k, v] of Object.entries(this.attrs)) {
             el.setAttribute(k, v);
         }
@@ -28,6 +30,12 @@ class SvgElement {
             );
         }
         return el;
+    }
+}
+
+class SvgElement extends BaseElement {
+    constructor(tag, attrs = {}, children = []) {
+        super(tag, attrs, children, "http://www.w3.org/2000/svg");
     }
 }
 
