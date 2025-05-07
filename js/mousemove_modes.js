@@ -4,6 +4,30 @@ class MouseHandler {
     handleMouseUp(e)   { throw new Error("Must override handleMouseUp"); }
 }
 
+class ModeUnitMove extends MouseHandler {
+    offsetX;
+    offsetY;
+
+    constructor(unit) {
+        super();
+
+        this.target = unit.closest('foreignObject');
+    }
+
+    handleMouseDown(e) {
+        this.offsetX = e.clientX - parseFloat(this.target.getAttribute('x'));
+        this.offsetY = e.clientY - parseFloat(this.target.getAttribute('y'));
+    }
+
+    handleMouseMove(e) {
+        this.target.setAttribute('x', e.clientX - this.offsetX);
+        this.target.setAttribute('y', e.clientY - this.offsetY);
+    }
+
+    handleMouseUp(e) {
+    }
+}
+
 class ModeLineOfFire extends MouseHandler {
     svg;
 
