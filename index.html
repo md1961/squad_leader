@@ -52,23 +52,7 @@
 
                 let isDragging = false;
 
-                svg.addEventListener('mousedown', (e) => {
-                    isDragging = true;
-
-                    mode.handleMouseDown(e);
-                });
-
-                svg.addEventListener('mousemove', (e) => {
-                    if (!isDragging) return;
-
-                    mode.handleMouseMove(e);
-                });
-
-                svg.addEventListener('mouseup', (e) => {
-                    isDragging = false;
-
-                    mode.handleMouseUp(e);
-                });
+                addEventListenersForMouseDragFor(svg);
             });
         </script>
     </head>

@@ -1,3 +1,25 @@
+function addEventListenersForMouseDragFor(target) {
+    let isDragging = false;
+
+    target.addEventListener('mousedown', (e) => {
+        isDragging = true;
+
+        mode.handleMouseDown(e);
+    });
+
+    target.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        mode.handleMouseMove(e);
+    });
+
+    target.addEventListener('mouseup', (e) => {
+        isDragging = false;
+
+        mode.handleMouseUp(e);
+    });
+}
+
 class MouseHandler {
     handleMouseDown(e) { throw new Error("Must override handleMouseDown"); }
     handleMouseMove(e) { throw new Error("Must override handleMouseMove"); }
