@@ -20,6 +20,12 @@ function addEventListenersForMouseDragFor(target) {
     });
 }
 
+class Mode {
+    static isLineOfFire() {
+        return document.querySelector('input[name="mode"]:checked')?.value === 'line_of_fire';
+    }
+}
+
 class MouseHandler {
     handleMouseDown(e) { throw new Error("Must override handleMouseDown"); }
     handleMouseMove(e) { throw new Error("Must override handleMouseMove"); }
