@@ -48,11 +48,8 @@
             document.addEventListener("DOMContentLoaded", function() {
                 const svg = document.getElementById("map");
 
-                const mode = new ModeLineOfFire(svg);
-
-                let isDragging = false;
-
-                addEventListenersForMouseDragFor(svg);
+                handler = new SvgMapMouseMoveHandler(svg);
+                addEventListenersForMouseDrag(handler);
             });
         </script>
     </head>

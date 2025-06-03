@@ -1,22 +1,22 @@
-function addEventListenersForMouseDragFor(target) {
+function addEventListenersForMouseDrag(handler) {
     let isDragging = false;
 
-    target.addEventListener('mousedown', (e) => {
+    handler.target.addEventListener('mousedown', (e) => {
         isDragging = true;
 
-        mode.handleMouseDown(e);
+        handler.handleMouseDown(e);
     });
 
-    target.addEventListener('mousemove', (e) => {
+    handler.target.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
 
-        mode.handleMouseMove(e);
+        handler.handleMouseMove(e);
     });
 
-    target.addEventListener('mouseup', (e) => {
+    handler.target.addEventListener('mouseup', (e) => {
         isDragging = false;
 
-        mode.handleMouseUp(e);
+        handler.handleMouseUp(e);
     });
 }
 
@@ -26,13 +26,19 @@ class Mode {
     }
 }
 
-class MouseHandler {
+class BaseMouseMoveHandler {
+    constructor() {
+        if (new.target === BaseMouseMoveHandler) {
+            throw new Error("BaseMouseMoveHandler cannot be instantiated directly.");
+        }
+    }
+
     handleMouseDown(e) { throw new Error("Must override handleMouseDown"); }
     handleMouseMove(e) { throw new Error("Must override handleMouseMove"); }
     handleMouseUp(e)   { throw new Error("Must override handleMouseUp"); }
 }
 
-class ModeUnitMove extends MouseHandler {
+class UnitMouseMoveHandler extends BaseMouseMoveHandler {
     offsetX;
     offsetY;
 
@@ -56,7 +62,7 @@ class ModeUnitMove extends MouseHandler {
     }
 }
 
-class ModeLineOfFire extends MouseHandler {
+class SvgMapMouseMoveHandler extends BaseMouseMoveHandler {
     svg;
 
     hexName0;
@@ -69,7 +75,13 @@ class ModeLineOfFire extends MouseHandler {
         this.svg = svg;
     }
 
+    get target() {
+        return this.svg;
+    }
+
     handleMouseDown(e) {
+        if (!Mode.isLineOfFire()) return;
+
         this.hexName1 = null;
 
         const [x, y] = transformViewPortCoordToSVG(e.clientX, e.clientY, this.svg);
@@ -84,6 +96,8 @@ class ModeLineOfFire extends MouseHandler {
     }
 
     handleMouseMove(e) {
+        if (!Mode.isLineOfFire()) return;
+
         const [x, y] = transformViewPortCoordToSVG(e.clientX, e.clientY, this.svg);
         this.hexName1 = findHexFromCoord(x, y);
 
@@ -100,8 +114,12 @@ class ModeLineOfFire extends MouseHandler {
     }
 
     handleMouseUp(e) {
+        if (!Mode.isLineOfFire()) return;
+
         let lastChild;
         while ((lastChild = this.svg.lastChild) !== this.svgHex0) {
+            if (!(lastChild instanceof Node)) break;
+
             this.svg.removeChild(lastChild);
         }
         this.svg.removeChild(lastChild);
