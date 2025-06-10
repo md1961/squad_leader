@@ -82,6 +82,8 @@ class SvgMapMouseMoveHandler extends BaseMouseMoveHandler {
     handleMouseDown(e) {
         if (!Mode.isLineOfFire()) return;
 
+        e.preventDefault();
+
         this.hexName1 = null;
 
         const [x, y] = transformViewPortCoordToSVG(e.clientX, e.clientY, this.svg);
