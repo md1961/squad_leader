@@ -22,7 +22,12 @@ function addEventListenersForMouseDrag(handler) {
 
 class Mode {
     static isLineOfFire() {
-        return document.querySelector('input[name="mode"]:checked')?.value === 'line_of_fire';
+        return this.radioModeValue() === 'line_of_fire';
+    }
+
+    static radioModeValue() {
+        const checked = document.querySelector('input[name="mode"]:checked')
+        return checked ? checked.value : null;
     }
 }
 
