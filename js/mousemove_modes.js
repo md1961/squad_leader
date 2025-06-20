@@ -21,6 +21,10 @@ function addEventListenersForMouseDrag(handler) {
 }
 
 class Mode {
+    static isNormal() {
+        return this.radioModeValue() === 'normal';
+    }
+
     static isLineOfFire() {
         return this.radioModeValue() === 'line_of_fire';
     }
