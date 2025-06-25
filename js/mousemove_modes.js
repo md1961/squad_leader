@@ -54,21 +54,22 @@ class UnitMouseMoveHandler extends BaseMouseMoveHandler {
     constructor(unit) {
         super();
 
-        this.target = unit.closest('foreignObject');
+        this.target = unit;
+        this.holder = unit.closest('foreignObject');
     }
 
     handleMouseDown(e) {
         if (!Mode.isNormal()) return;
 
-        this.offsetX = e.clientX - parseFloat(this.target.getAttribute('x'));
-        this.offsetY = e.clientY - parseFloat(this.target.getAttribute('y'));
+        this.offsetX = e.clientX - parseFloat(this.holder.getAttribute('x'));
+        this.offsetY = e.clientY - parseFloat(this.holder.getAttribute('y'));
     }
 
     handleMouseMove(e) {
         if (!Mode.isNormal()) return;
 
-        this.target.setAttribute('x', e.clientX - this.offsetX);
-        this.target.setAttribute('y', e.clientY - this.offsetY);
+        this.holder.setAttribute('x', e.clientX - this.offsetX);
+        this.holder.setAttribute('y', e.clientY - this.offsetY);
     }
 
     handleMouseUp(e) {
