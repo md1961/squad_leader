@@ -34,14 +34,17 @@
             document.addEventListener("DOMContentLoaded", function() {
                 const svg = document.getElementById("map");
 
-                const unit = new Unit('6-2-8:3', 450, 230);
-                const elemUnit = unit.toDOM();
+                let unit = new Unit('6-2-8:3', 450, 230);
+                let elemUnit = unit.toDOM();
+                svg.appendChild(elemUnit);
+
+                unit = new Unit('4-4-7:3', 500, 200);
+                elemUnit = unit.toDOM();
                 svg.appendChild(elemUnit);
 
                 document.querySelectorAll('.unit').forEach(unit => {
-                    unit.addEventListener('click', (e) => {
-                        console.log('CLICKED!');
-                    });
+                    handler = new UnitMouseMoveHandler(unit);
+                    addEventListenersForMouseDrag(handler);
                 });
             });
 
